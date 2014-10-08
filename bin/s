@@ -1,0 +1,13 @@
+#!/bin/bash
+
+USAGE="$0 text_to_search_for"
+
+if [ ! "$*" ] ; then
+   echo $USAGE 
+   exit
+fi
+
+#grep -r -I --exclude='*~' --exclude='*.js' --exclude-dir='*dependencies/KalturaAPI*' --exclude-dir='\.hg' --exclude-dir=migrations "$*" .
+grep -r -I --exclude='*~' --exclude='*.sql'  --exclude-dir='*dependencies/KalturaAPI*' --exclude-dir='\.hg' --exclude-dir=migrations "$*" .
+#find . -type f ! -name '*.png' ! -name '*~' ! -name '*.jpg' ! -name '*.pyc' ! -name '*.gif' ! -path '*.svn*' ! -path '*/.hg/*' -exec grep "$*" {} \;
+

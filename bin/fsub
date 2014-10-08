@@ -1,0 +1,84 @@
+#!/usr/bin/perl 
+
+use strict ;
+
+my $action = '';
+my $open_option = '';
+my $filename = $0;
+$filename =~ s[^.*/][];
+
+my $usage = "Substitue a string for a regexp in a number of files.\n". 
+  "Usage: $filename [-s] regexp string file1-or-glob [file2 file3 ...]\n".
+  "Without -s, changes are only displayed. \n" .
+  "With -s, the substitution actually occurs.\n" .
+  "If only a single file name is supplied, it is treated as \n" .
+  "a glob and searched for recursively under the current directory.";
+
+if ($ARGV[0] =~ /^-/) {
+    $action = shift (@ARGV);
+    $action =~ s/^-//;
+}
+
+if ($action =~ /s/) {
+    # $open_option = "+>";
+}
+
+print "$usage\n" unless @ARGV >= 3;
+
+my $regexp = shift;
+my $string = shift;
+my @files;
+
+if (@ARGV > 1) {
+	@files = @ARGV;
+} else {
+	my $glob = shift;
+	@files = `find . -name '$glob' -type f`;
+}
+
+chomp @files;
+foreach my $file (@files) {
+	my $change_info = '';
+	my $changes = 0;
+
+    unless (open(FILE, "$file")) {
+		warn "Could not open $file \n$!\n";
+		next;
+    }
+    my @contents = <FILE>;
+    unless (close(FILE)) {
+		warn "Could not close $file \n$!\n";
+		next;
+    }
+
+    foreach (@contents) {
+		if (/$regexp/) {
+			$changes = 1;
+			$change_info .= "BEFORE: $_" unless $action =~ /s/;
+			s/$regexp/$string/g;
+			$change_info .= "AFTER:  $_" unless $action =~ /s/;
+		}
+    }
+
+	next unless $changes;
+    print "===================== $file ====================\n" unless $action =~ /s/;
+	print $change_info;
+
+    if ($action =~ /s/) {
+		warn "writing $file\n";
+		unless (open(FILE, ">$file")) {
+			warn "Could not open $file for writing changes \n$!\n";
+			next;
+		}
+		unless (print FILE @contents) {
+			warn "Could not write to $file \n$!\n";	    
+			next;
+		}
+		unless (close(FILE)) {
+			warn "Could not close $file \n$!\n";
+			next;
+		}
+    }
+ 
+}
+

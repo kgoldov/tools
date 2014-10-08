@@ -1,0 +1,16 @@
+[ui]
+username = Kim Goldov <kim@indieflix.com>
+merge = emacs
+
+[merge-tools]
+emacs.args = -q --eval "(ediff-merge-with-ancestor \"$local\" \"$other\" \"$base\" nil \"$output\")"
+
+[extensions]
+hgext.graphlog =
+hgext.purge =
+# hgshelve = /home/kim/.hg.d/hgshelve/hgshelve.py
+
+[alias]
+allbranches = branches
+branches = branches --active
+

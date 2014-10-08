@@ -1,0 +1,21 @@
+hg incoming <repo>
+# command to tell us what changes the hg pull command would pull 
+# into the repository, without actually pulling the changes in.
+
+# common/bin/hg-remove-head
+#!/bin/bash
+
+USAGE="Usage $0 rev"
+
+if [ "$#" -ne 1 ]; then
+  echo $USAGE
+  exit
+fi
+
+# hg heads --topo # Shows all childless heads
+hg up /dev/null  # /dev/null is the special throw-away branch
+hg --config ui.merge=internal:local merge $1
+hg commit -m "abandon unwanted head, $1"
+echo "head $1 removed. Don't forget to push."
+
+hg log --limit 30 --template '{date|shortdate}\t{branches}\t{desc}\n' --user tom

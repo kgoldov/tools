@@ -1,0 +1,2 @@
+netstat -tulpn # get process on ports
+watch -s ls -l # see output change every 2 seconds

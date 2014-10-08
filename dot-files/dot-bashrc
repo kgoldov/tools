@@ -1,0 +1,126 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# don't put duplicate lines in the history. See bash(1) for more options
+export HISTCONTROL=ignoredups
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+xterm-color)
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    ;;
+*)
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    ;;
+esac
+
+# Comment in the above and uncomment this below for a color prompt
+#PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+    ;;
+*)
+    ;;
+esac
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+#if [ -f ~/.bash_aliases ]; then
+#    . ~/.bash_aliases
+#fi
+
+# enable color support of ls and also add handy aliases
+if [ "$TERM" != "dumb" ]; then
+    eval "`dircolors -b`"
+    alias ls='ls --color=auto'
+    #alias dir='ls --color=auto --format=vertical'
+    #alias vdir='ls --color=auto --format=long'
+fi
+
+# some more ls aliases
+alias ll='ls -l'
+#alias la='ls -A'
+#alias l='ls -CF'
+
+#alias s="find . -type f ! -name '*.png' ! -name '*~' ! -name '*.jpg' ! -name '*.pyc' ! -name '*.gif' ! -path '*.svn*' | xargs grep"
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+
+# ZendFramework
+alias zf=$HOME/ZendFramework/bin/zf.sh
+
+########### from zurna ############
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# PS1="[\u@\h \w]\\$ "
+
+# User specific aliases and functions
+alias e='emacs&'
+alias ee='/home/kim/eclipse/eclipse&'
+alias eee='/home/kim/pycharm/bin/pycharm.sh&'
+alias x='chmod a+x'
+alias prod='ssh ubuntu@indieflix.com'
+alias staging='ssh ubuntu@staging-indieflix.com'
+alias rs='./manage.py runserver 0.0.0.0:8000'
+
+export JAVA_HOME=/usr/local/java/latest
+export PATH=$JAVA_HOME/bin:$PATH
+export JRE_HOME=$JAVA_HOME/latest/jre
+
+# export M2_HOME=/usr/share/maven/apache-maven-2.2.0
+# export M2=$M2_HOME/bin
+# MAVEN_OPTS="-Xms256m -Xmx512m"
+# export PATH=$M2:$PATH
+
+# # end of path
+#PATH=${PATH/:?sbin/:SLASH_SBIN_DISABLED}
+#PATH=${PATH/:?bin/:SLASH_BIN_DISABLED}
+#export PATH=$PATH:$HOME/bin:.
+# PATH is set in .bash_profile
+# PATH=/usr/kerberos/bin:/usr/lib/courier-imap/bin:/usr/local/bin:/bin:/usr/bin:/usr/X11R6/bin:/home/goldovco/bin:.:/home/goldovco/bin
+
+export EDITOR=emacs
+
+export PYTHONPATH=$PYTHONPATH:$HOME/indieflix_code
+export PIP_DOWNLOAD_CACHE=$HOME/projects/.pip_download_cache
+
+# For virtualenvwrapper
+
+export WORKON_HOME=~/.virtualenvs
+. /usr/local/bin/virtualenvwrapper.sh
+export PIP_VIRTUALENV_BASE=$WORKON_HOME
+export PIP_RESPECT_VIRTUALENV=true
+
+# workon indieflix
+
+export PATH=$PATH:$HOME/ic/common/bin:$HOME/bin:.
