@@ -14,92 +14,84 @@
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 
-(setq column-number-mode t)         ; col numbers in status bar
-(setq-default indent-tabs-mode nil) ; add spaces when indenting with tabs. Its t by default
-(setq default-tab-width 8)
-(setq require-final-newline t)      ; Always end a file with a newline
-;(setq which-func-format '(" [" which-func-current "]"))
-(which-func-mode 1)       
 
-;;;;;;;;;;;;;;;;;;;;;; FUNCTIONS USED ;;;;;;;;;;;;;;;;;;;;
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
-;;;;;;;;;;;;;;;;;; end FUNCTIONS USED ;;;;;;;;;;;;;;;;;;;;
+; (setq column-number-mode t)         ; col numbers in status bar
+; (setq-default indent-tabs-mode nil) ; add spaces when indenting with tabs. Its t by default
+; (setq default-tab-width 8)
+; (setq require-final-newline t)      ; Always end a file with a newline
+; ;(setq which-func-format '(" [" which-func-current "]"))
+; (which-func-mode 1)       
 
-;;;;;;;;;;;;;;;;;;;;;; KEY BINDINGS ;;;;;;;;;;;;;;;;;;;;
-(global-set-key [delete] 'delete-char)    ; Delete char at cursor instead of backspace
-(global-set-key [kp-delete] 'delete-char) ; Delete char at cursor instead of backspace
+; ;;;;;;;;;;;;;;;;;;;;;; FUNCTIONS USED ;;;;;;;;;;;;;;;;;;;;
+; (put 'downcase-region 'disabled nil)
+; (put 'upcase-region 'disabled nil)
+; ;;;;;;;;;;;;;;;;;; end FUNCTIONS USED ;;;;;;;;;;;;;;;;;;;;
 
-(global-set-key [(shift up   )] (lambda () (interactive) (scroll-down 1) (previous-line 1)))
-(global-set-key [(shift down )] (lambda () (interactive) (scroll-up 1)   (next-line 1)))
-(global-set-key [(shift right)] (lambda () (interactive) (scroll-left 1) (forward-char 1)))
-(global-set-key [(shift left )] (lambda () (interactive) (scroll-right 1)(backward-char 1)))
+; ;;;;;;;;;;;;;;;;;;;;;; KEY BINDINGS ;;;;;;;;;;;;;;;;;;;;
+; (global-set-key [delete] 'delete-char)    ; Delete char at cursor instead of backspace
+; (global-set-key [kp-delete] 'delete-char) ; Delete char at cursor instead of backspace
 
-(defvar scroll-speed 2 "* scroll speed for control shift right and left")
-(global-set-key [C-S-right] (lambda () (interactive) (scroll-left scroll-speed)  (forward-char scroll-speed)))
-(global-set-key [C-S-left]  (lambda () (interactive) (scroll-right scroll-speed) (backward-char scroll-speed)))
+; (global-set-key [(shift up   )] (lambda () (interactive) (scroll-down 1) (previous-line 1)))
+; (global-set-key [(shift down )] (lambda () (interactive) (scroll-up 1)   (next-line 1)))
+; (global-set-key [(shift right)] (lambda () (interactive) (scroll-left 1) (forward-char 1)))
+; (global-set-key [(shift left )] (lambda () (interactive) (scroll-right 1)(backward-char 1)))
 
-(global-set-key [C-S-up]   (lambda () (interactive)(scroll-down scroll-speed) (previous-line scroll-speed)))
-(global-set-key [C-S-down] (lambda () (interactive)(scroll-up scroll-speed)   (next-line scroll-speed)))
+; (defvar scroll-speed 2 "* scroll speed for control shift right and left")
+; (global-set-key [C-S-right] (lambda () (interactive) (scroll-left scroll-speed)  (forward-char scroll-speed)))
+; (global-set-key [C-S-left]  (lambda () (interactive) (scroll-right scroll-speed) (backward-char scroll-speed)))
 
-(global-set-key [(meta down)] 'shrink-window)
-(global-set-key [(meta up)]   'enlarge-window)
+; (global-set-key [C-S-up]   (lambda () (interactive)(scroll-down scroll-speed) (previous-line scroll-speed)))
+; (global-set-key [C-S-down] (lambda () (interactive)(scroll-up scroll-speed)   (next-line scroll-speed)))
 
-(defvar scroll-speed 2 "* scroll speed for control shift right and left")
-(global-set-key [(control shift right)] (lambda () (interactive) (scroll-left scroll-speed) (forward-char scroll-speed)))
-(global-set-key [(control shift left )] (lambda () (interactive) (scroll-right scroll-speed)(backward-char scroll-speed)))
+; (global-set-key [(meta down)] 'shrink-window)
+; (global-set-key [(meta up)]   'enlarge-window)
+
+; (defvar scroll-speed 2 "* scroll speed for control shift right and left")
+; (global-set-key [(control shift right)] (lambda () (interactive) (scroll-left scroll-speed) (forward-char scroll-speed)))
+; (global-set-key [(control shift left )] (lambda () (interactive) (scroll-right scroll-speed)(backward-char scroll-speed)))
 
 (global-set-key [f5] 'shell)
-
-(defun toggle-line-wrap ()
-  (interactive)
-  (if (eq truncate-lines t)
-      (setq truncate-lines nil)
-    (setq truncate-lines t)
-    )
-  (redraw-display)
-  )
-(global-set-key [f9] 'toggle-line-wrap)
+(global-set-key [f9] 'toggle-truncate-lines)
 
 
-; Add line numbers at the start of buffers
-(when (file-exists-p "~/.emacs.d/setnu.el")
-  (load-file "~/.emacs.d/setnu.el") 
-  (global-set-key "\C-cn" 'setnu-mode) ; line numbers on left side
-  )
-
-; Rectangle highlighting and mouse bindings
-(when (file-exists-p "~/.emacs.d/rect-mark.el")
-  (load-file "~/.emacs.d/rect-mark.el") 
-
-  (define-key ctl-x-map "r\C-@" 'rm-set-mark)
-  (define-key ctl-x-map [?r ?\C-\ ] 'rm-set-mark)
-  (define-key ctl-x-map "r\C-x" 'rm-exchange-point-and-mark)
-  (define-key ctl-x-map "r\C-w" 'rm-kill-region)
-  (define-key ctl-x-map "r\M-w" 'rm-kill-ring-save)
-  (define-key global-map [C-S-down-mouse-1] 'rm-mouse-drag-region)
-  (define-key global-map [C-S-down-mouse-2] 'yank-rectangle)
-  (define-key global-map [C-S-down-mouse-3] 'rm-kill-region)
-  )
-
-; ICAD mouse bindings
-(when (file-exists-p "~/.emacs.d/mouse-support.el")
-  (load-file "~/.emacs.d/mouse-support.el") 
-
-  (global-set-key [\C-mouse-2] 'ignore)
-  (global-set-key [\C-down-mouse-2] 'mouse-yank-expression)
-  )
-
-;; LOAD ANY KEYBOARD MACROS
-(if (file-exists-p "~/.emacs.d/keyboard-macros.el") (load-file "~/.emacs.d/keyboard-macros.el"))
-;;;;;;;;;;;;;;;;;; end KEY BINDINGS ;;;;;;;;;;;;;;;;;;;;
-
-; (defun error_log ()
-;   (interactive)
-;   (shell "*error_log*")
-;   (insert-string "tail -f /var/log/apache2/error.log")
-;   (comint-send-input)
+; ; Add line numbers at the start of buffers
+; (when (file-exists-p "~/.emacs.d/setnu.el")
+;   (load-file "~/.emacs.d/setnu.el") 
+;   (global-set-key "\C-cn" 'setnu-mode) ; line numbers on left side
 ;   )
+
+; ; Rectangle highlighting and mouse bindings
+; (when (file-exists-p "~/.emacs.d/rect-mark.el")
+;   (load-file "~/.emacs.d/rect-mark.el") 
+
+;   (define-key ctl-x-map "r\C-@" 'rm-set-mark)
+;   (define-key ctl-x-map [?r ?\C-\ ] 'rm-set-mark)
+;   (define-key ctl-x-map "r\C-x" 'rm-exchange-point-and-mark)
+;   (define-key ctl-x-map "r\C-w" 'rm-kill-region)
+;   (define-key ctl-x-map "r\M-w" 'rm-kill-ring-save)
+;   (define-key global-map [C-S-down-mouse-1] 'rm-mouse-drag-region)
+;   (define-key global-map [C-S-down-mouse-2] 'yank-rectangle)
+;   (define-key global-map [C-S-down-mouse-3] 'rm-kill-region)
+;   )
+
+; ; ICAD mouse bindings
+; (when (file-exists-p "~/.emacs.d/mouse-support.el")
+;   (load-file "~/.emacs.d/mouse-support.el") 
+
+;   (global-set-key [\C-mouse-2] 'ignore)
+;   (global-set-key [\C-down-mouse-2] 'mouse-yank-expression)
+;   )
+
+; ;; LOAD ANY KEYBOARD MACROS
+; (if (file-exists-p "~/.emacs.d/keyboard-macros.el") (load-file "~/.emacs.d/keyboard-macros.el"))
+; ;;;;;;;;;;;;;;;;;; end KEY BINDINGS ;;;;;;;;;;;;;;;;;;;;
+
+; ; (defun error_log ()
+; ;   (interactive)
+; ;   (shell "*error_log*")
+; ;   (insert-string "tail -f /var/log/apache2/error.log")
+; ;   (comint-send-input)
+; ;   )
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.

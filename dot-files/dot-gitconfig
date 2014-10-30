@@ -1,0 +1,18 @@
+[user]
+	email = kim@goldov.com
+	name = Kim Goldov
+[push]
+	default = simple
+[core]
+	excludesfile = /home/kim/.gitignore
+[alias]
+    st = status
+    stat = status
+    ci = commit
+    comm = commit
+    br = branch
+    co = checkout
+    df = diff
+    dc = diff --cached
+    lg = log -p
+    who = shortlog -s --
