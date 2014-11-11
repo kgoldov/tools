@@ -13,5 +13,6 @@ fi
 
 grep -i -r -I --exclude='*~' \
            --exclude='*.sql'  \
+           --exclude-dir='*crisp_cool*' \
            --exclude-dir='\.git' \
            --exclude-dir=migrations "$*" .
