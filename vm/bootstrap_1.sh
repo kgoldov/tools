@@ -9,7 +9,7 @@ echo "
  GRANT ALL PRIVILEGES ON *.* TO 'kim'@'localhost';
 " | mysql
 
-# sudo apt-get install emacs -y
+sudo apt-get install emacs -y
 # sudo apt-get install mercurial -y
 sudo apt-get install libmysqlclient-dev -y
 sudo apt-get install python-mysqldb -y

@@ -1,0 +1,6 @@
+# Connect to an existing repo
+git init
+git remote add origin <URL>
+git pull
+git branch --set-upstream master origin/master # Deprecated
+git add

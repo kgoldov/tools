@@ -33,7 +33,7 @@ if (@ARGV > 1) {
 	@files = @ARGV;
 } else {
 	my $glob = shift;
-	@files = `find . -name '$glob' -type f ! -path '*migrations*'`;
+	@files = `find . -name '$glob' -type f ! -path '*migrations*' ! -name '*.pyc'`;
 }
 
 chomp @files;

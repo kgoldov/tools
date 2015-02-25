@@ -1,0 +1,32 @@
+# Install postgis
+
+sudo  dpkg --configure -a
+sudo apt-get update
+sudo apt-get install postgresql postgresql-contrib postgis postgresql-9.3-postgis-2.1
+sudo apt-get install libpq-dev
+sudo apt-get install python3-dev
+pip install psycopg2
+
+## createdb template_postgis
+kim@pav:~$ sudo -u postgres psql template_postgis
+[sudo] password for kim: 
+psql (9.3.5)
+Type "help" for help.
+
+template_postgis=# \d
+No relations found.
+template_postgis=# \conninfo
+You are connected to database "template_postgis" as user "postgres" via socket in "/var/run/postgresql" at port "5432".
+template_postgis=# create extension postgis;
+CREATE EXTENSION
+template_postgis=# \d
+               List of relations
+ Schema |       Name        | Type  |  Owner   
+--------+-------------------+-------+----------
+ public | geography_columns | view  | postgres
+ public | geometry_columns  | view  | postgres
+ public | raster_columns    | view  | postgres
+ public | raster_overviews  | view  | postgres
+ public | spatial_ref_sys   | table | postgres
+
+sudo apt-get install gdal-bin ### For looking at shape files
