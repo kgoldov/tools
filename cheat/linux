@@ -1,2 +1,12 @@
 netstat -tulpn # get process on ports
 watch -s ls -l # see output change every 2 seconds
+
+# Install X-Windows on server
+# http://serverfault.com/questions/425346/cant-open-display-x11-forwarding-cent-os
+# For CentOS, at least ...
+1) Install the following:
+xorg-x11-xauth
+xorg-x11-fonts-*
+xorg-x11-utils
+2) Enable the following in the sshd_config file
+X11Forwarding yes
