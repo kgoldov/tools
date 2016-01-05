@@ -1,5 +1,9 @@
 ;;(set-default-font "-misc-fixed-medium-r-normal--15-*-*-*-c-90-iso8859-1")
 
+(when (eq system-type 'darwin)
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier nil))
+
 (when (eq window-system 'x)
 ;;  (set-frame-width (selected-frame) 120)
 ;;  (set-frame-height (selected-frame) 55)
@@ -11,7 +15,7 @@
 ; (setq font-lock-maximum-decoration t)
 ; (global-font-lock-mode 1 t)
  
-(tool-bar-mode 0)
+; (tool-bar-mode 0)
 (menu-bar-mode 0)
 
 
@@ -105,3 +109,4 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
+
